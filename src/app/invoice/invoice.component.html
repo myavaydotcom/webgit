@@ -1,0 +1,284 @@
+<!-- form start from here -->
+<form class="form-group container align-items-center">
+    <nb-card class="row">
+        <nb-card-body class="col-12">
+            <div class="row">
+                <div class="col-8">
+                    <input type="text" nbInput fullWidth shape="semi-round" minlength="2" maxlength="30"
+                        placeholder="Invoice name" class="form-control" [(ngModel)]="invoiceName" name="invoice">
+                    <small class="text text-danger" *ngIf="isInvoiceNameEmpty && invoiceName.length === 0">*Please fill
+                        this field</small>
+                </div>
+                <div class="col-4 file-upload">
+                    <button id="fileupload-example-5" class="mr-2">
+                        <input type="file" #file (change)="profileImage(file.value)">
+                        <nb-icon style="color: #fff;" icon="plus-outline" status="dark"></nb-icon>
+                    </button>
+                    <span *ngIf="imageData.length > 0">{{ imageData }}</span>
+                </div>
+            </div>
+        </nb-card-body>
+    </nb-card>
+
+    <!-- details of Sender to Reciever -->
+
+    <div class="row">
+        <nb-card class="col-12">
+            <nb-card-body class="row">
+                <div class="col-6" style="border-right: 1px solid #fff">
+                    <h2 class="text text-light">From</h2>
+                    <hr>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" nbInput fullWidth shape="semi-round" minlength="2" maxlength="20"
+                            class="form-control" [(ngModel)]="businessName" name="businessName" id="name">
+                        <small class="text-danger" *ngIf="businessName.length > 19">*Name must be between 2 to 20
+                            character
+                            long</small>
+                        <small class="text-danger" *ngIf="isBusinessNameEmpty && businessName.length === 0">*Please fill
+                            this field</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" nbInput fullWidth shape="semi-round" minlength="6" maxlength="40"
+                            class="form-control" [(ngModel)]="email" name="email" id="email">
+                        <small class="text-danger" *ngIf="!emailValidator(email) && email.length > 0">*Email is not
+                            valid</small>
+                        <small class="text-danger" *ngIf="isEmailEmpty && email.length === 0">*Please fill this
+                            field</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" nbInput fullWidth shape="semi-round" minlength="5" maxlength="50"
+                            class="form-control" [(ngModel)]="address" name="address" id="address">
+                        <small class="text-danger" *ngIf="isAddressEmpty && address.length === 0">*Please fill this
+                            field</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="text" nbInput fullWidth shape="semi-round" class="form-control" [(ngModel)]="phone"
+                            name="phone" id="phone">
+                        <small class="text-danger" *ngIf="!phoneValidator(phone) && phone?.length > 0">*Phone number
+                            must
+                            be 10 digit long</small>
+                        <small class="text-danger" *ngIf="isPhoneEmpty && phone.length === 0">*Please fill this
+                            field</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="businessPhone">Business Number</label>
+                        <input type="text" nbInput fullWidth shape="semi-round" class="form-control"
+                            [(ngModel)]="businessPhone" name="businessPhone" id="businessPhone">
+                        <small class="text-danger" *ngIf="!phoneValidator(businessPhone) && businessPhone?.length > 0">
+                            *Phone number must be 10 digit long
+                        </small>
+                        <small class="text-danger" *ngIf="isBusinessPhoneEmpty && businessPhone.length === 0">*Please
+                            fill this field</small>
+                    </div>
+
+                </div>
+                <div class="col-6">
+                    <h2 class="text text-light">To</h2>
+                    <hr>
+                    <div class="form-group">
+                        <label for="clientName">Name</label>
+                        <input type="text" nbInput fullWidth shape="semi-round" minlength="2" maxlength="20"
+                            class="form-control" [(ngModel)]="clientName" name="clientName" id="clientName">
+                        <small class="text-danger" *ngIf="isClientNameEmpty && clientName.length === 0">*Please fill
+                            this field</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="clientEmail">Email</label>
+                        <input type="email" nbInput fullWidth shape="semi-round" class="form-control"
+                            [(ngModel)]="clientEmail" name="clientEmail" id="clientEmail">
+                        <small class="text-danger" *ngIf="!emailValidator(clientEmail) && clientEmail.length > 0">
+                            *email is not valid
+                        </small>
+                        <small class="text-danger" *ngIf="isClientEmailEmpty && clientEmail.length === 0">*Please fill
+                            this field</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="clientAddress">Address</label>
+                        <input type="text" nbInput fullWidth shape="semi-round" minlength="6" maxlength="50"
+                            class="form-control" [(ngModel)]="clientAddress" name="clientAddress" id="clientAddress">
+                        <small class="text-danger" *ngIf="isClientAddressEmpty && clientAddress.length === 0">*Please
+                            fill this field</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="clientPhone">Phone</label>
+                        <input type="text" nbInput fullWidth shape="semi-round" class="form-control"
+                            [(ngModel)]="clientPhone" name="clientPhone" id="clientPhone">
+                        <small class="text-danger" *ngIf="!phoneValidator(clientPhone) && clientPhone?.length > 0">
+                            *phone no must be 10 digit long
+                        </small>
+                        <small class="text-danger" *ngIf="isClientPhoneEmpty && clientPhone.length === 0">*Please fill
+                            this field</small>
+                    </div>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </div>
+
+    <!-- other details to date,time etc. -->
+    <nb-card class="row">
+        <nb-card-body class="col-12">
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label class="label" for="invoiceNumber">Invoice Number</label>
+                        <input type="text" nbInput fullWidth shape="semi-round" placeholder="Invoice Number"
+                            class="form-control" [(ngModel)]="invoiceNumber" name="invoiceNumber" id="invoiceNumber">
+                        <small class="text-danger" *ngIf="isInvoiceNumberEmpty && invoiceNumber.length === 0">*Please
+                            fill this field</small>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label class="label" for="dateInvoice">Date</label>
+                        <input type="date" nbInput fullWidth shape="semi-round" class="form-control"
+                            [(ngModel)]="dateInvoice" name="dateInvoice" id="dateInvoice">
+                        <small class="text-danger" *ngIf="isDateInvoiceEmpty && dateInvoice.length === 0">*Please fill
+                            this field</small>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group">
+                        <label class="label" for="term">Terms</label>
+                        <nb-select fullWidth placeholder="Due Date" [(ngModel)]="terms" name="term">
+                            <nb-option value="1">Terms 1</nb-option>
+                            <nb-option value="2">Terms 2</nb-option>
+                            <nb-option value="3">Terms 3</nb-option>
+                            <nb-option value="4">Terms 4</nb-option>
+                        </nb-select>
+                    </div>
+                </div>
+            </div>
+        </nb-card-body>
+    </nb-card>
+
+    <!-- Item details -->
+    <nb-card class="row">
+        <nb-card-body class="col-12">
+            <div class="form-group">
+                <div class="float-right mb-2" [ngStyle]="{'cursor':'pointer'}" (click)="addNewItem()">
+                    <nb-icon icon="folder-add-outline" class="mr-1" status="primary"></nb-icon>
+                    <span>Add New</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="thead text-light">
+                            <tr>
+                                <th scope="col">Description</th>
+                                <th scope="col">Rate</th>
+                                <th scope="col">Qty</th>
+                                <th scope="col" class="amount">Amt</th>
+                                <th scope="col">Tax</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let itemInput of itemDetails;let i = index;">
+                                <td>
+                                    <input type="text" nbInput shape="semi-round" placeholder="Description"
+                                        minlength="1" [(ngModel)]="itemInput.itemDescription"
+                                        [name]="'itemDescription_' + i" [id]="'itemDescription_' + i"
+                                        #description="ngModel">
+                                    <span *ngIf="i === 0">
+                                        <small class="text text-danger"
+                                            *ngIf="(itemInput.itemDescription.length === 0 && description.dirty) || (isEmptyAfterSubmit && itemInput.itemDescription.length === 0)">*This
+                                            field also required.</small>
+                                    </span>
+                                    <span *ngIf="i !== 0">
+                                        <small class="text text-danger"
+                                            *ngIf="(itemInput.itemDescription.length === 0 && description.dirty)">*This
+                                            field also required.</small>
+                                    </span>
+                                </td>
+                                <td>
+                                    <input type="number" nbInput shape="semi-round" step="0.01" min="0"
+                                        placeholder="0.00" [(ngModel)]="itemInput.itemRate" [name]="'itemRate_' + i"
+                                        [id]="'itemRate_' + i" #rate="ngModel">
+                                    <span *ngIf="i === 0">
+                                        <small class="text text-danger"
+                                            *ngIf="((itemInput.itemRate === 0 || itemInput.itemRate === null) && rate.dirty) || (isEmptyAfterSubmit && itemInput.itemRate === 0)">*This
+                                            field also
+                                            required.</small>
+                                    </span>
+                                    <span *ngIf="i !== 0">
+                                        <small class="text text-danger"
+                                            *ngIf="((itemInput.itemRate === 0 || itemInput.itemRate === null) && rate.dirty)">*This
+                                            field also
+                                            required.</small>
+                                    </span>
+                                </td>
+                                <td>
+                                    <input type="number" nbInput shape="semi-round" value="1" min="1"
+                                        [(ngModel)]="itemInput.itemQty" (change)="subTotalFinalCount()"
+                                        [name]="'itemQty_' + i" [id]="'itemQty_' + i" #qty="ngModel">
+
+                                    <span *ngIf="i === 0">
+                                        <small class="text text-danger"
+                                            *ngIf="((itemInput.itemQty === 0 || itemInput.itemRate === null) && qty.dirty) || (isEmptyAfterSubmit && itemInput.itemQty === 0)">*This
+                                            field also
+                                            required.</small>
+                                    </span>
+                                    <span *ngIf="i !== 0">
+                                        <small class="text text-danger"
+                                            *ngIf="((itemInput.itemQty === 0 || itemInput.itemRate === null) && qty.dirty)">*This
+                                            field also
+                                            required.</small>
+                                    </span>
+                                </td>
+                                <td class="amount">
+                                    <p>&#8377;{{ (itemInput.itemRate*itemInput.itemQty | number: '1.0-5') }}</p>
+                                </td>
+                                <td>
+                                    <input type="checkbox" aria-label="" [(ngModel)]="itemInput.itemTax"
+                                        [name]="'itemTax_' + i" [id]="'itemTax_' + i">
+                                </td>
+                                <td>
+                                    <nb-icon icon="close-square-outline" status="primary"
+                                        [ngStyle]="{'cursor':'pointer'}" (click)="deleteItem(i)"></nb-icon>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- item details filling is empty warnings -->
+                <small class="text-danger" *ngIf="!isItemInputLeft">*Minimum one item Required</small>
+            </div>
+        </nb-card-body>
+    </nb-card>
+    <hr>
+    <!--  Total -->
+    <div class="row">
+        <div class="col-8">
+            <nb-card>
+                <nb-card-body>
+                    <div class="form-group">
+                        <label for="lastNotes">Note</label>
+                        <textarea nbInput fullWidth
+                            placeholder="Notes - any relevant information not covered, additional terms and conditions"
+                            cols="50" rows="3" [(ngModel)]="lastNotes" name="lastNotes" id="lastNotes"></textarea>
+                        <small class="text-danger" *ngIf="isLastNotesEmpty && lastNotes.length === 0">*Please fill this
+                            field</small>
+                    </div>
+                </nb-card-body>
+            </nb-card>
+        </div>
+        <div class="col-4">
+            <!-- Final note for invoice -->
+            <nb-card>
+                <nb-card-body>
+                    <p>Subtotal : {{ subTotal | currency: 'INR' }}</p>
+                    <p>Tax(%) : &#8377;18%</p>
+                    <p>Total : {{ subTotal + subTotal*0.18 | currency: 'INR' }}</p>
+                </nb-card-body>
+            </nb-card>
+        </div>
+    </div>
+    <button nbButton type="submit" class="float-right" (click)="onSubmit()">Submit</button>
+</form>

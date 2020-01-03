@@ -1,0 +1,148 @@
+<nb-card *ngIf="invoiceData.length === 0">
+    <nb-card-body>
+        <h1>Please create an invoice , No invoice Data Available</h1>
+    </nb-card-body>
+</nb-card>
+
+<nb-accordion *ngIf="invoiceData.length >0">
+    <nb-accordion-item *ngFor="let data of invoiceData;let i = index;">
+        <nb-accordion-item-header>{{data.id}}. {{data.invoiceName}}</nb-accordion-item-header>
+        <nb-accordion-item-body>
+            <nb-card>
+                <nb-card-body>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcStm4XHsj6hY0m9w2OZZIT9II0NCR3uhq7c7FNFSLsNuqMB5u4i"
+                        class="img rounded" width="100" height="100" />
+                </nb-card-body>
+            </nb-card>
+            <!-- sender and reciever's details -->
+            <nb-card>
+                <nb-card-body>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6" style="border-right: 1px solid #fff">
+                                <p>Sender Details:</p>
+                                <table class="table text-light">
+                                    <tbody>
+                                        <tr>
+                                            <td>Name</td>
+                                            <td>{{ data.businessName }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Email</td>
+                                            <td>{{ data.email }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Address</td>
+                                            <td>{{ data.address }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Phone</td>
+                                            <td>{{ data.phone }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Business Number</td>
+                                            <td>{{ data.businessPhone }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-6">
+                                <p>Reciever's Details:</p>
+                                <table class="table text-light">
+                                    <tbody>
+                                        <tr>
+                                            <td>Name</td>
+                                            <td>{{ data.clientName }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Email</td>
+                                            <td>{{ data.clientEmail }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Address</td>
+                                            <td>{{ data.clientAddress }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Phone</td>
+                                            <td>{{ data.clientPhone }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </nb-card-body>
+            </nb-card>
+
+            <!-- invoice details -->
+            <nb-card>
+                <nb-card-body>
+                    <p><strong>Invoice Number :</strong> {{ data.invoiceNumber }}</p>
+                    <br>
+                    <p><strong>Date :</strong> {{ data.dateInvoice }}</p>
+                    <br>
+                    <p><strong>Terms :</strong> Term3</p>
+                </nb-card-body>
+            </nb-card>
+
+            <!-- Description of all items -->
+            <nb-accordion>
+                <nb-accordion-item *ngFor="let item of data.itemDetails;let i = index;">
+                    <nb-accordion-item-header>
+                        Item ({{ item.uniqueId }})
+                    </nb-accordion-item-header>
+                    <nb-accordion-item-body>
+                        <nb-card>
+                            <nb-card-body>
+                                <h2>Item details</h2>
+                                <table class="table text-light">
+                                    <tbody>
+                                        <tr>
+                                            <td>Rate</td>
+                                            <td>{{ item.itemRate | currency: 'INR' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Qty</td>
+                                            <td>{{ item.itemQty }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Amt</td>
+                                            <td>{{ item.itemRate*item.itemQty+item.itemRate*item.itemQty*0.18 | currency: 'INR' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tax</td>
+                                            <td>{{ item.itemTax ? 'Applied(18%)' : 'Not Applied(0%)' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td *ngIf="item.itemMoreDetails.length > 0">Description</td>
+                                            <td>{{ item.itemMoreDetails }}</td>
+                                            <td *ngIf="item.itemMoreDetails.length<1">No Description Available</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </nb-card-body>
+                        </nb-card>
+                    </nb-accordion-item-body>
+                </nb-accordion-item>
+            </nb-accordion><br>
+
+
+            <nb-card>
+                <nb-card-body>
+                    <nb-card>
+                        <nb-card-body>
+                            <p><strong>Note : </strong>{{ data.lastNotes }}</p>
+                        </nb-card-body>
+                    </nb-card>
+                    <nb-card>
+                        <nb-card-body>
+                            <p><strong>Total Balance :</strong>
+                                &#8377;{{ data.subTotal | number: '1.0-5' }}</p>
+                        </nb-card-body>
+                    </nb-card>
+                </nb-card-body>
+            </nb-card>
+
+        </nb-accordion-item-body>
+    </nb-accordion-item>
+</nb-accordion>

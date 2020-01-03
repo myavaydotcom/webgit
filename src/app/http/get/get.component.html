@@ -1,0 +1,96 @@
+<form class="form" class="mb-8 pb-2">
+    <div class="row">
+        <div class="col-12">
+            <input type="text" nbInput fullWidth status="primary" placeholder="Please enter API URL" [(ngModel)]="url"
+                name="urls">
+        </div>
+        <div class="col-12 d-flex">
+            <nb-select [(ngModel)]="selectedValue" name="selection" (ngModelChange)="newSelection()" class="mt-2 mr-2"
+                placeholder="Select Data">
+                <nb-option value="todos">Todos</nb-option>
+                <nb-option value="albums">Albums</nb-option>
+                <nb-option value="users">Users</nb-option>
+                <nb-option value="photos">Photos</nb-option>
+                <nb-option value="comments">Comments</nb-option>
+            </nb-select>
+            <button nbButton class="mt-2" (click)="getData()" [disabled]="loading">
+                Send Request
+            </button>
+            <button nbButton class="mt-2 ml-2" (click)="clearData()" [disabled]="loading">
+                Clear
+            </button>
+        </div>
+    </div>
+</form>
+
+<nb-card class="mr-5" *ngIf="data.length > 0" accent="danger" size="large" [nbSpinner]="loading"
+    nbSpinnerStatus="danger" nbSpinnerSize="large" nbSpinnerMessage="loading..." class="h-auto">
+    <!-- TODOS -->
+    <span *ngIf="selectedValue === 'todos' && isNewFetch && !loading">
+        <nb-list>
+            <nb-list-item *ngFor="let user of allowedItems">
+                {{user.id}}. <span class="title">{{user.title}}</span> ({{user.completed}})
+            </nb-list-item>
+        </nb-list>
+    </span>
+
+    <!-- ALBUMS -->
+    <span *ngIf="selectedValue === 'albums' && isNewFetch && !loading">
+        <nb-list>
+            <nb-list-item *ngFor="let user of allowedItems">
+                {{user.id}}. <span class="title">{{user.title}}</span>
+            </nb-list-item>
+        </nb-list>
+    </span>
+
+    <!-- PHOTOS -->
+    <span *ngIf="selectedValue === 'photos' && isNewFetch && !loading">
+        <nb-card *ngFor="let user of allowedItems">
+            <nb-card-header>
+                <span class="title">{{ user.title }}</span>
+            </nb-card-header>
+            <nb-card-body>
+                <img [src]="user?.url" alt="no image available" width="200px" heigth='200px'>
+            </nb-card-body>
+        </nb-card>
+    </span>
+
+    <!-- USERS -->
+    <span *ngIf="selectedValue === 'users' && isNewFetch && !loading">
+        <nb-card *ngFor="let user of allowedItems">
+            <nb-card-header>
+                {{ user.id }}. <span class="title">{{ user.name }}</span>
+            </nb-card-header>
+            <nb-card-body>
+                Name: {{ user.username }}
+                <br>
+                Email: {{ user.email }}
+            </nb-card-body>
+        </nb-card>
+    </span>
+
+    <!-- COMMENTS -->
+    <span *ngIf="selectedValue === 'comments' && isNewFetch && !loading">
+        <nb-card *ngFor="let user of allowedItems">
+            <nb-card-header>
+                {{user.id}}. <span class="title">{{ user.name }}</span>
+            </nb-card-header>
+            <nb-card-body>
+                Comments: {{ user.body }}
+            </nb-card-body>
+        </nb-card>
+    </span>
+
+    <nb-card *ngIf="data.length && isNewFetch && !loading">
+        <nb-card-body>
+            <div class="row">
+                <div class="col-6">
+                    <button nbButton status="primary" (click)="previous(start-10,start)" [disabled]="start === 0">
+                        << Previous Page</button> </div> <div class="col-6">
+                            <button nbButton status="primary" (click)="next(start,start+10)"
+                                [disabled]="data.length === start + 10">Next Page>></button>
+                </div>
+            </div>
+        </nb-card-body>
+    </nb-card>
+</nb-card>

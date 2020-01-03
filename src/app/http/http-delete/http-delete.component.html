@@ -1,0 +1,6 @@
+<form>
+    <input type="text" nbInput fullWidth status="primary" placeholder="url" [(ngModel)]="url" name="urls">
+    <button nbButton class="mt-2" (click)="deleteData()" [disabled]="loading">
+        delete data
+    </button>
+</form>

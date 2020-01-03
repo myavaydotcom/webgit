@@ -1,0 +1,8 @@
+<form class="form-group p-4">
+    <input type="number" placeholder="How many bar chart" class="form-control" (ngModelChange)="makeArray(bars.value)" [(ngModel)]="barChart" name="bar" #bars>
+    <button type="submit" class="btn btn-success form-control w-25 mt-2" (click)="showBarChart()">Show Charts</button> 
+</form>
+
+<div class="charts" *ngFor="let id of ids">
+    <div [id]="'chart'+id"></div>
+</div>

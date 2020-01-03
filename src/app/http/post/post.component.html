@@ -1,0 +1,13 @@
+<form class="form" class="mb-8 pb-2">
+    <div class="row">
+        <div class="col-12">
+            <input nbInput fullWidth type="text" class="form-control" [(ngModel)]="url" name="request">
+        </div>
+        <div class="col-12 d-flex">
+            <nb-select [(ngModel)]="selectedValue" class="m-1" name="selected" placeholder="Select Value">
+                <nb-option *ngFor="let data of expectedValue;let i = index;" [value]="data">{{data}}</nb-option>
+            </nb-select>
+            <button nbButton class="mt-1 mb-1 w-25" (click)="getRequestedData()">Post Data</button> 
+        </div>
+    </div>
+</form>
