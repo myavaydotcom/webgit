@@ -1,0 +1,28 @@
+<nb-layout>
+    <nb-layout-header *ngIf="isLoggedIn" fixed>
+        <div class="container-fluid">
+            <div class="float-left">
+                <span [ngStyle]="{'cursor':'pointer'}" (click)="sideBar()">
+                    <nb-icon icon="menu" status="primary" *ngIf="sidebar"></nb-icon>
+                    <nb-icon icon="close" status="primary" *ngIf="!sidebar"></nb-icon>
+                    <span [ngStyle]="{'padding':'5px'}">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRtYDyV8_AKgQuQ2BghoMGOKUGbBs_PYx0uwz17t9Gp09USmTx5"
+                            class="circle" width="50px" height="50px" alt="...">
+                    </span>
+                    <a href="javascript:void(0)" (click)="openDialog()">{{username}}</a>
+                </span>
+            </div>
+            <div class="float-right">
+                <button nbButton status="primary" (click)="logOut()">Log Out</button>
+            </div>
+        </div>
+    </nb-layout-header>
+
+    <nb-sidebar *ngIf="isLoggedIn">
+        <nb-menu [items]="items">
+        </nb-menu>
+    </nb-sidebar>
+    <nb-layout-column>
+        <router-outlet></router-outlet>
+    </nb-layout-column>
+</nb-layout>

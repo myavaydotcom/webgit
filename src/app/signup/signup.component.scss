@@ -1,0 +1,31 @@
+nb-card-body.example-items-col {
+    align-items: stretch;
+  }
+.container{
+  width : 40%;
+}
+.input{
+  padding : 5px;
+}
+
+#fileupload-example-5 {
+  position: relative;
+  overflow: hidden;
+  background-color : blueviolet;
+  width : auto;
+  height: auto;
+  border : 0;
+  border-radius :10px;
+  float :left;
+  
+}
+
+#fileupload-example-5 input {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0.001;
+  cursor : pointer;
+}

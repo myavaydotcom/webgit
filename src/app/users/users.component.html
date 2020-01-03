@@ -1,0 +1,112 @@
+<nb-card>
+    <nb-card-body>
+        <nb-card>
+            <nb-card-body>
+                <form>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <input type="text" nbInput fullWidth shape="round" placeholder="Enter name"
+                                [(ngModel)]="username" name="username" #user="ngModel">
+                            <small class="text-danger"
+                                *ngIf="(isNameRequiredError && username.length === 0) || (isNameRequiredError && user.dirty && username.length === 0)">*username
+                                is required</small>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="email" nbInput fullWidth shape="round" placeholder="Enter email"
+                                [(ngModel)]="email" name="email" #mail="ngModel">
+                            <small class="text-danger"
+                                *ngIf="(isEmailRequiredError && email.length === 0) || (isEmailRequiredError && mail.dirty && email.length === 0)">*email
+                                is required</small>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="number" nbInput fullWidth shape="round" min="1" max="120"
+                                placeholder="Enter age" [(ngModel)]="age" name="age" #ages="ngModel">
+                            <small class="text-danger"
+                                *ngIf="(isAgeRequiredError && (age === null || age === 0)) || (isAgeRequiredError && ages.dirty && (age === null || age === 0))">*age
+                                is required</small><br>
+                            <small class="text-danger" *ngIf="age > 120">*age is so large.</small>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="number" nbInput fullWidth shape="round" min="1" max="9999999999"
+                                placeholder="Enter phone number" [(ngModel)]="phone" name="phone" #phones>
+                            <small class="text-danger"
+                                *ngIf="(isPhoneRequiredError && (phone === null || phone === 0)) || (!phones.dirty && (phones.value === 0 || phones.value === null))">*phone
+                                is required</small>
+                            <br><small class="text-danger" *ngIf="phone > max_value">*number is very large</small>
+                        </div>
+                        <div class="col-md-1">
+                            <button class="btn btn-primary" type="submit" (click)="add()"
+                                [disabled]="user.length === 0 && mail.length === 0 && ages === 0 && phones.value === 0">
+                                Add
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </nb-card-body>
+        </nb-card>
+        <!-- Searching Item from List  -->
+        <nb-card>
+            <nb-card-body>
+                <form>
+                    <input #search type="search" nbInput fullWidth shape="round" placeholder="Search Items"
+                        (ngModelChange)="filteringItem(search.value)" [(ngModel)]="searchItem" name="search">
+                    <small class="text-danger" *ngIf="isItemMatched">*No Item Matched</small>
+                </form>
+            </nb-card-body>
+        </nb-card>
+
+        <nb-card class="List of people">
+            <nb-card-body>
+                <table class="table text text-light" *ngIf="usersList.length>0">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">User Id</th>
+                            <th scope="col">Username</th>
+                            <th scope="col">Email Id</th>
+                            <th scope="col">User Age</th>
+                            <th scope="col">User Phone</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let user of usersList; let i = index;">
+                            <th scope="row">
+                                <span>{{user.id}}</span>
+                            </th>
+                            <td><span *ngIf="selectedIndex != i">{{user.name}}</span>
+                                <input #name type="text" nbInput fullWidth fieldSize="small" [value]="user.name"
+                                    [(ngModel)]="user.name" *ngIf="isEditMode && selectedIndex == i">
+                            </td>
+                            <td>
+                                <span *ngIf="selectedIndex != i">{{user.email}}</span>
+                                <input #email type="text" nbInput fullWidth fieldSize="small" [value]="user.email"
+                                    [(ngModel)]="user.email" *ngIf="isEditMode && selectedIndex == i">
+                            </td>
+                            <td>
+                                <span *ngIf="selectedIndex != i">{{user.age}}</span>
+                                <input #age type="text" nbInput fullWidth fieldSize="small" [value]="user.age"
+                                    [(ngModel)]="user.age" *ngIf="isEditMode && selectedIndex == i">
+                            </td>
+                            <td>
+                                <span *ngIf="selectedIndex != i">{{user.phone}}</span>
+                                <input #phone type="text" nbInput fullWidth fieldSize="small" min="1"
+                                    max="9999999999999" [value]="user.phone" [(ngModel)]="user.phone"
+                                    *ngIf="isEditMode && selectedIndex == i">
+                            </td>
+                            <td>
+                                <nb-icon icon="edit-2" status="primary" (click)="edit(i, true)" *ngIf="!isEditMode">
+                                </nb-icon>
+                                <nb-icon icon="edit" (click)="edit(i, false, user)"
+                                    *ngIf="isEditMode && selectedIndex == i"></nb-icon>
+                                <nb-icon icon="trash-2" status="primary" (click)="delete(i)"
+                                    [ngStyle]="{'cursor':'pointer'}" *ngIf="!isEditMode"></nb-icon>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="alert alert-warning" *ngIf="!usersList.length>0">No Result Found</div>
+            </nb-card-body>
+        </nb-card>
+
+    </nb-card-body>
+</nb-card>

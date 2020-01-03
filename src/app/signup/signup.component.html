@@ -1,0 +1,50 @@
+<div class="container text-center">
+    <nb-card>
+        <nb-card-header>Create New User</nb-card-header>
+        <nb-card-body class="example-items-col">
+            <form>
+                <div class="input">
+                    <input type="text" nbInput fullWidth status="primary" placeholder="Enter Username" [(ngModel)]="username" name="username">
+                </div>
+
+                <div class="input">
+                    <input type="email" nbInput fullWidth status="primary" placeholder="Enter Email" [(ngModel)]="email" name="email" #mail="ngModel">
+                </div>
+                <small class="text text-danger" *ngIf="mail.dirty && !email.match(emailValidationPattern)">*Invalid email id</small>
+
+                <div class="input">
+                    <input type="password" nbInput fullWidth status="primary" placeholder="Enter Password"
+                        name="password" [(ngModel)]="password" #pass="ngModel">
+                </div>
+                <small class="text text-danger" *ngIf="pass.dirty && !password.match(passwordValidationPattern)">*password should have 4-8 character and at least one capital ,one small and one digit and underscore only</small>
+
+                <div class="input">
+                    <input type="password" nbInput fullWidth status="primary" placeholder="Confirm Password"
+                        [(ngModel)]="confirmPassword" name="confirmPassword" #cpass="ngModel">
+                </div>
+                <small class="text text-danger" *ngIf="cpass.dirty && !(cpass.value === pass.value)">*Both aren't same</small>
+                <small class="text text-danger" *ngIf="cpass.dirty && cpass.value === ''">*This field is required</small>
+                <button id="fileupload-example-5">
+                    <input type="file" #file (change)="profileImage(file.value)">
+                    <span>choose file</span>
+                </button>
+                
+                <div class="alert alert-warning alert-dismissible fade show" role="alert" *ngIf="userExistError">
+                    <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+
+            </form>
+        </nb-card-body>
+        <nb-card-footer>
+            <button nbButton fullWidth status="primary" (click)="onSubmit()" [disabled]="mail.dirty && !email.match(emailValidationPattern) || pass.dirty && !password.match(passwordValidationPattern) || cpass.dirty && !(cpass.value === pass.value) || cpass.dirty && cpass.value === ''">
+                Sign Up</button>
+            <br><br>
+            <span class="float-right">
+                <a href="javascript:void(0)" (click)="goLogIn()">already have an account?</a>
+            </span>
+        </nb-card-footer>
+    </nb-card>
+</div>

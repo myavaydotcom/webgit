@@ -1,0 +1,25 @@
+<div class="container text-align">
+    <nb-card>
+        <nb-card-header class="text-align">Login User</nb-card-header>
+        <nb-card-body>
+            <form>
+                <div class="input">
+                    <input type="email" nbInput fullWidth status="primary" placeholder="Enter Email" name="email"
+                        [(ngModel)]="email">
+                </div>
+                <div class="input">
+                    <input type="password" nbInput fullWidth status="primary" placeholder="Enter Password"
+                        name="password" [(ngModel)]="password">
+                </div>
+            </form>
+        </nb-card-body>
+        <nb-card-footer>
+            <button nbButton fullWidth status="primary" (click)="onSubmit()">Log In</button>
+            <br><br>
+            <span class="container"> 
+                <a href="javascript:void(0)" class="float-right" (click)="goSignUp()">New user ? create new account here</a>
+            </span>
+        </nb-card-footer>
+    </nb-card>
+    
+</div>

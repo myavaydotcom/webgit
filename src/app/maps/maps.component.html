@@ -1,0 +1,36 @@
+<nb-card>
+    <nb-card-body>
+        <div class="row">
+            <div class="col-md-4">
+                <label for="long">Longitude</label>
+                <input type="number" nbInput shape="round" fieldSize="small" [(ngModel)]="lng" name="longitude"
+                    id="long">
+            </div>
+            <div class="col-md-4">
+                <label for="lati">Latitude</label>
+                <input type="number" nbInput shape="round" fieldSize="small" [(ngModel)]="lat" name="longitude"
+                    id="lati">
+            </div>
+            <div class="col-md-4">
+                <label for="zoom">zoom</label>
+                <input type="range" nbInput shape="round" fieldSize="small" min="3" max="18" [(ngModel)]="zoom"
+                    name="zoom" id="zoom">
+            </div>
+        </div>
+        <form class="form-group">
+            <label for="address">Address</label>
+            <input #search type="text" nbInput shape="round" fieldSize="medium" placeholder="Search an address"
+                [value]="marker" class="form-control" [(ngModel)]="findAddress" name="findAddress" id="address">
+        </form>
+    </nb-card-body>
+</nb-card>
+
+<agm-map [latitude]="lat" [longitude]="lng" [scrollwheel]="true" [rotateControl]="true" [mapTypeControl]="true"
+    [zoom]="zoom" [fullscreenControl]="true" [mapDraggable]="true" [mapTypeControl]="true"
+    (mapClick)="onChosenLocation($event)">
+    <agm-marker [latitude]="lat" [longitude]="lng" [markerDraggable]="true" (dragEnd)="onDragged($event)">
+        <agm-info-window [isOpen]="true" [disableAutoPan]="true">
+            <small [ngStyle]="{'color':'black'}">{{findAddress || marker}}</small>
+        </agm-info-window>
+    </agm-marker>
+</agm-map>
